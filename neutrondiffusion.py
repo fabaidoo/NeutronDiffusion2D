@@ -1,12 +1,13 @@
 from nutils import function, mesh, solver, topology, element
 import matplotlib.pyplot as plt
 
-def neutrondiffusion(mat_flag = 'scatterer', BC_flag = 'vacuum',bigsquare = 1, smallsquare = .1, degree = 2):
+def neutrondiffusion(mat_flag = 'scatterer', BC_flag = 'vacuum',bigsquare = 1, smallsquare = .1, degree = 1,
+                     basis = 'lagrange'):
                      
     W = bigsquare #width of outer box
     Wi = smallsquare #width of inner box
 
-    nelems = int(25 *W) #25 elements per unit distance
+    nelems = int((2 * 3 * W/Wi)) 
     
     if mat_flag == 'scatterer':
         sigt = 2
@@ -23,7 +24,7 @@ def neutrondiffusion(mat_flag = 'scatterer', BC_flag = 'vacuum',bigsquare = 1, s
     
     topo, geom = mesh.unitsquare(nelems, 'square') #unit square centred at (0.5, 0.5)
     ns = function.Namespace()
-    ns.basis = topo.basis('lagrange', degree = degree)
+    ns.basis = topo.basis(basis, degree = degree)
     
     ns.x = W * geom #scales the unit square to our physical square
     ns.f =function.max(function.abs(ns.x[0] -  W/2), function.abs(ns.x[1] - W/2)) #level set function for inner square 
