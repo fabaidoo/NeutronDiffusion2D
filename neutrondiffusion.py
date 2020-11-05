@@ -7,7 +7,7 @@ def neutrondiffusion(mat_flag = 'scatterer', BC_flag = 'vacuum',bigsquare = 1, s
     W = bigsquare #width of outer box
     Wi = smallsquare #width of inner box
 
-    nelems = int((2 * 3 * W/Wi)) 
+    nelems = int((2 * 1 * W/Wi)) 
     
     if mat_flag == 'scatterer':
         sigt = 2
